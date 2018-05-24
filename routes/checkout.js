@@ -13,10 +13,24 @@ router.post('/', function(req, res, next) {
 
   // Use the payment method nonce here
   var nonceFromTheClient = req.body.paymentMethodNonce;
+  var userData = req.body.userData ? req.body.userData : {};
+  const randAmount = Math.round(Math.random() * 10000) / 100;
   // Create a new transaction for $10
   var newTransaction = gateway.transaction.sale({
-    amount: '10.00',
+    merchantAccountId: 'gbptestco',
+    amount: randAmount.toString(),
     paymentMethodNonce: nonceFromTheClient,
+    billing: userData.billingAddress,
+    lineItems: [
+      {
+        description: 'This is an amazing description',
+        kind: 'debit',
+        name: 'Item Name',
+        quantity: 1,
+        totalAmount: randAmount,
+        unitAmount: randAmount
+      }
+    ],
     options: {
       // This option requests the funds from the transaction
       // once it has been authorized successfully
