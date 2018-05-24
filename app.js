@@ -25,6 +25,9 @@ app.use('/users', usersRouter);
 var checkout = require('./routes/checkout');
 app.use('/checkout', checkout);
 
+var token = require('./routes/token');
+app.use('/token', token);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
